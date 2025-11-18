@@ -1,5 +1,5 @@
 FROM python:3.10-slim
-ENV TOKEN='8247136339:AAGpxrCjuuzZv6-tG2PUv2vUxdCeHhKoqRE'
+ENV TOKEN='your token'
 COPY . . 
 RUN pip install -r requirements.txt
 ENTRYPOINT ["python", "bot.py"]
