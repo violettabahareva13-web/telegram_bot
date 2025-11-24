@@ -102,22 +102,27 @@ TRANSLIT_RULES = {
 # 4. Обработка всех сообщений
 @dp.message()
 async def send_FIO(message: Message):
-    words = message.text.split()
-    normalized_words = []
-    if not all((ch.isalpha() and "А" <= ch <= "я") or ch in " -Ёё" for ch in words):
-        await message.answer("Ошибка: вводите ФИО на кириллице.")
+    text = message.text.strip()
+    if not text:
+        await message.answer("Ошибка: пустое сообщение.")
         return
 
-    for w in words:
-        if len(w) > 0:
-            normalized = w[0].upper() + w[1:].lower()
-            normalized_words.append(normalized)
-        else:
-            normalized_words.append(w)
-    s = " ".join(normalized_words)
-    transliterated = "".join(TRANSLIT_RULES.get(ch, ch) for ch in s)
+    words = text.split()
+    result_words = []
 
-    await message.answer(transliterated)
+    for word in words:
+        normalized_word = word[0].upper() + word[1:].lower()
+
+        translit_chars = []
+        for ch in normalized_word:
+            if "А" <= ch <= "я" or ch in "Ёё":
+                translit_chars.append(TRANSLIT_RULES.get(ch, ch))
+            else:
+                translit_chars.append(ch)
+        result_words.append("".join(translit_chars))
+
+    final = " ".join(result_words)
+    await message.answer(final)
 
 
 # 5. Запуск процесса пуллинга
