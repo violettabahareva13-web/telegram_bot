@@ -3,10 +3,10 @@ import logging
 import os
 
 from aiogram import Bot, Dispatcher
-from aiogram.types import Message  # ловим все обновления этого типа
+from aiogram.types import Message
 from aiogram.filters.command import (
     Command,
-)  # обрабатываем команды /start, /help и другие
+)
 
 
 # 2. Инициализация объектов
